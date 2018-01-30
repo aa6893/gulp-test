@@ -1,0 +1,48 @@
+//-可以把 mixin 看做是 function
+mixin link(url, name)
+	if( path === url )
+		li.nav-item.active
+			a.nav-link(href='#{url}')
+				|#{name}
+	else
+		li.nav-item
+			a.nav-link(href='#{url}')
+				|#{name}
+
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+	a.navbar-brand(href='#') Navbar
+	button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+		span.navbar-toggler-icon
+	#navbarSupportedContent.collapse.navbar-collapse
+		ul.navbar-nav.mr-auto
+
+			//-使用 mixin + each + #{} 方式載入 json 值
+			each item in menu.list 
+				//-用 + mixin 名稱 的方式來引用 mixin 並帶入值
+				+link(item.url, item.name)
+				
+
+			//-each item in menu.list // 使用 each + #{} 方式載入 json 值
+				li.nav-item.active
+					a.nav-link(href='#{item.url}')
+						| #{item.name}
+
+			//- li.nav-item.active
+			//- 	a.nav-link(href='#')
+			//- 		| Home 
+			//- 		span.sr-only (current)
+			//- li.nav-item
+			//- 	a.nav-link(href='#') Link
+			//- li.nav-item.dropdown
+			//- 	a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+			//- 		| Dropdown
+			//- 	.dropdown-menu(aria-labelledby='navbarDropdown')
+			//- 		a.dropdown-item(href='#') Action
+			//- 		a.dropdown-item(href='#') Another action
+			//- 		.dropdown-divider
+			//- 		a.dropdown-item(href='#') Something else here
+			//- li.nav-item
+			//- 	a.nav-link.disabled(href='#') Disabled
+		form.form-inline.my-2.my-lg-0
+			input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+			button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search

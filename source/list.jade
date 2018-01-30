@@ -1,0 +1,65 @@
+extend layout.jade
+
+block navbar
+	- var path='list.html'
+	include partials/navbar.jade
+
+block content
+	.card-columns
+		each item in khData.records
+			.card
+				img.card-img-top(src='#{item.RelatedFileURL}', alt='Card image cap')
+				.card-body
+					h5.card-title #{item.Title}
+					p.card-text
+						| #{item.Content}
+						
+		//- .card.p-3
+		//- 	blockquote.blockquote.mb-0.card-body
+		//- 		p
+		//- 			| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+		//- 		footer.blockquote-footer
+		//- 			small.text-muted
+		//- 				| Someone famous in 
+		//- 				cite(title='Source Title') Source Title
+		//- .card
+		//- 	img.card-img-top(src='...', alt='Card image cap')
+		//- 	.card-body
+		//- 		h5.card-title Card title
+		//- 		p.card-text This card has supporting text below as a natural lead-in to additional content.
+		//- 		p.card-text
+		//- 			small.text-muted Last updated 3 mins ago
+		//- .card.bg-primary.text-white.text-center.p-3
+		//- 	blockquote.blockquote.mb-0
+		//- 		p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.
+		//- 		footer.blockquote-footer
+		//- 			small
+		//- 				| Someone famous in 
+		//- 				cite(title='Source Title') Source Title
+		//- .card.text-center
+		//- 	.card-body
+		//- 		h5.card-title Card title
+		//- 		p.card-text This card has supporting text below as a natural lead-in to additional content.
+		//- 		p.card-text
+		//- 			small.text-muted Last updated 3 mins ago
+		//- .card
+		//- 	img.card-img(src='...', alt='Card image')
+		//- .card.p-3.text-right
+		//- 	blockquote.blockquote.mb-0
+		//- 		p
+		//- 			| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+		//- 		footer.blockquote-footer
+		//- 			small.text-muted
+		//- 				| Someone famous in 
+		//- 				cite(title='Source Title') Source Title
+		//- .card
+		//- 	.card-body
+		//- 		h5.card-title Card title
+		//- 		p.card-text
+		//- 			| This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
+		//- 		p.card-text
+		//- 			small.text-muted Last updated 3 mins ago
+
+	
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js", integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4", crossorigin="anonymous")

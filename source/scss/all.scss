@@ -1,0 +1,30 @@
+@import "bootstrap";
+@import "animate";
+
+$primary-color: red;
+$primary-color2: yellow;
+
+$bg: "../image/";
+$color: blue;
+$hover-color: red;
+a {
+	color: $color;
+	background: url(#{$bg}icon.png);
+	.test {
+		color: yellow;
+		&:hover {
+			color: $hover-color;
+		}
+	}
+	&:hover {
+		color: $hover-color;
+	}
+}
+
+body{
+	color: $primary-color;
+}
+
+body{
+	color: $primary-color2;
+}

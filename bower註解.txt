@@ -1,0 +1,10 @@
+Sass教學 (26) - 使用animate.scss增強網頁瀏覽體驗
+https://ithelp.ithome.com.tw/articles/10159400
+
+animate.css
+GitHub  https://github.com/daneden/animate.css
+官網  https://daneden.github.io/animate.css/
+
+wow.js
+GitHub  https://github.com/matthieua/WOW
+官網  http://mynameismatthieu.com/WOW/

@@ -1,0 +1,102 @@
+var gulp = require('gulp');
+//watch = require('gulp-watch');
+var $ = require('gulp-load-plugins')();
+// var jade = require('gulp-jade'); // 此為被 gulp-load-plugins 取代後改為標註
+// var sass = require('gulp-sass');
+// var plumber = require('gulp-plumber');
+// var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+
+// gulp.task('copyHTML', function(){
+// 	return gulp.src('./source/**/*.html')
+// 		.pipe(gulp.dest('./public/'))
+// })
+var mainBowerFiles = require('main-bower-files');
+var browserSync = require('browser-sync').create();
+var minimist = require('minimist');
+
+
+//start minimist 相關程式碼
+var envOptions = {
+  string: 'env',
+  default: {env: 'develop'}
+}
+var options = minimist(process.argv.slice(2), envOptions)
+console.log(options)
+//end minimist 相關程式碼
+
+
+gulp.task('jade', function() {
+  // var YOUR_LOCALS = {};
+ 
+  gulp.src('./source/**/*.jade')
+  	.pipe($.plumber())//防止錯誤中斷套件
+    .pipe($.jade({
+      // locals: YOUR_LOCALS
+      pretty: true
+    }))
+    .pipe(gulp.dest('./public/'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('sass', function () {
+	var plugins = [//postcss
+        autoprefixer({browsers: ['last 1 version']}),//autoprefixer
+        // cssnano()
+    ];
+  return gulp.src('./source/scss/**/*.scss')
+  	.pipe($.plumber())
+  	.pipe($.sourcemaps.init())// 產生 .map 檔，也可以用在 css 上
+    .pipe($.sass().on('error', $.sass.logError))
+    // sass 編譯完成
+    .pipe($.postcss(plugins))//postcss
+    .pipe($.minifyCss()) // 壓縮 css，minify-css 因為要使用 gulp-load-plugins 插件，所以不能有 - 要以大寫來表示
+    .pipe($.sourcemaps.write('.'))// 產生 .map 檔，也可以用在 css 上
+    .pipe(gulp.dest('./public/css'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('babel', () => {
+  return gulp.src('./source/js/**/*.js')
+    .pipe($.sourcemaps.init())// 產生 .map 檔，也可以用在 css 上
+    .pipe($.babel({
+        presets: ['es2015']
+    }))
+    .pipe($.concat('all.js'))// 合併多個 js 檔案
+    .pipe($.uglify({
+      compress:{
+        drop_console: true // 可以過濾掉 console.log() 的測式碼
+      }
+    }))
+    .pipe($.sourcemaps.write('.'))// 產生 .map 檔，也可以用在 css 上
+    .pipe(gulp.dest('./public/js'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('bower', function() {
+  return gulp.src(mainBowerFiles())
+    .pipe(gulp.dest('./.tmp/vendors'))
+});
+
+gulp.task('vendorJs', ['bower'], function(){
+  return gulp.src('./.tmp/vendors/**/**.js')
+    .pipe($.concat('vendors.js'))
+    .pipe($.uglify()) // 壓縮 js
+    .pipe(gulp.dest('./public/js'))
+});
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./public"
+        }
+    });
+});
+
+gulp.task('watch', function () {
+  gulp.watch('./source/scss/**/*.scss', ['sass']);
+  gulp.watch('./source/*.jade', ['jade']);
+  gulp.watch('./source/js/**/*.js', ['babel']);  
+});
+
+gulp.task('default', ['jade','sass', 'babel','vendorJs','browser-sync','watch']);

@@ -1,0 +1,45 @@
+extend layout.jade
+
+block navbar
+	- var path='index.html'
+	include partials/navbar.jade
+
+block content
+
+	h1 #{menu.list[1].name}
+
+	h1
+		span Content
+		| Another content
+
+		ul
+			li
+				a(href="") link
+			li
+				a(href="") link
+			li
+				a(href="") link	
+
+	br
+	| content
+
+	h1: a(href="#"): span 連結 
+		<!--下面的簡寫，用冒號:+空格來作為區隔-->
+
+	h1
+		a(href="#")
+			span 連結
+
+	.container
+		form(action="")
+			label(for="email") 請輸入 email
+			input#email(type="text" class="form-control")
+			//或這樣寫 input#email.form-control(type="text")，輸出 html 還是會轉成 
+			<!--說明內容-->
+			//-要加入多個樣式可以用.接在後面寫  input#email.form-control.input-sm(type="text")，這種註解不會出現在 html 中
+
+	br
+	p  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque ipsa aperiam, nam nisi modi ea tempora harum, deleniti commodi ab ex inventore unde accusamus laboriosam consequatur aspernatur similique explicabo sed.
+	
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js", integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4", crossorigin="anonymous")
